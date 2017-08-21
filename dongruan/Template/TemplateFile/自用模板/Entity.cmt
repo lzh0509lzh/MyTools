@@ -1,0 +1,32 @@
+﻿/*         
+*│版权所有：Dream1993
+*│创建人：Lee        
+*/  
+<#@ template language="c#" HostSpecific="True" #>
+<#@ output extension= ".cs" #>
+<#
+	TableHost host = (TableHost)(Host);
+	host.Fieldlist.Sort(CodeCommon.CompareByintOrder);
+#>
+using System; 
+using System.Text;
+using System.Collections.Generic; 
+using System.Data;
+namespace <#= host.NameSpace #>.Entity<# if( host.Folder.Length > 0) {#>.<#= host.Folder #><# } #>
+{
+	public class <#= host.GetModelClass(host.TableName) #>
+	{   
+      	<# foreach (ColumnInfo c in host.Fieldlist)
+		{ #>/// <summary>
+		/// <#= string.IsNullOrEmpty(c.Description) ? c.ColumnName : c.Description #>
+        /// </summary>		
+		private <#= CodeCommon.DbTypeToCS(c.TypeName) #> _<#= c.ColumnName.ToString().ToLower() #>;
+        public <#= CodeCommon.DbTypeToCS(c.TypeName) #> <#= c.ColumnName #>
+        {
+            get{ return _<#= c.ColumnName.ToString().ToLower()#>; }
+            set{ _<#= c.ColumnName.ToString().ToLower() #> = value; }
+        }        
+		<# } #>
+   
+	}
+}

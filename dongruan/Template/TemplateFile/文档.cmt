@@ -1,0 +1,4 @@
+﻿<#= string.IsNullOrEmpty(c.Description) ? c.ColumnName : c.Description #>
+<#= CodeCommon.DbTypeToCS(c.TypeName) #>
+<#= c.ColumnName #>
+<#= c.Description #>
